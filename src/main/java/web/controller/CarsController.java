@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.models.Car;
-import web.service.CarService;
+import web.service.CarsService;
+
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ import java.util.List;
 @RequestMapping("/cars")
 public class CarsController {
 
-    @Autowired
-    private final CarService cars;
+    private final CarsService cars;
 
-    public CarsController(CarService cars) {
+    @Autowired
+    public CarsController(CarsService cars) {
         this.cars = cars;
     }
 

@@ -9,15 +9,15 @@
 <body>
 <h1>CarTable</h1>
 
-<table>
+<table th:border="1">
     <tr>
         <th>model</th>
         <th>color</th>
-        <th>power</th>
+        <th>engineVolume</th>
     </tr>
 
     <tr th:each="lst : ${cars}">
-        <td th:utext="${lst.modelName}">brand</td>
+        <td th:utext="${lst.modelName}">model</td>
         <td th:utext="${lst.color}">color</td>
         <td th:utext="${lst.engineVolume}">engineVolume</td>
     </tr>
