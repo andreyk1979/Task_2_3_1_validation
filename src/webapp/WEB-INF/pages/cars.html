@@ -3,9 +3,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Car</title>
+    <style>table th, table td {padding: 5px;}</style>
 </head>
 <body>
+<h1>CarTable</h1>
+
+<table>
+    <tr>
+        <th>model</th>
+        <th>color</th>
+        <th>power</th>
+    </tr>
+
+    <tr th:each="lst : ${cars}">
+        <td th:utext="${lst.modelName}">brand</td>
+        <td th:utext="${lst.color}">color</td>
+        <td th:utext="${lst.engineVolume}">engineVolume</td>
+    </tr>
+
+</table>
 <div>
     <th:block th:each="msgCars : ${cars}">
         <h1 th:text="${msgCars}"></h1>
