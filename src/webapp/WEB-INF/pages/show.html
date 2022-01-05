@@ -3,22 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Человек</title>
+    <title>Person</title>
 </head>
 <body>
 <div>
 
-<p th:text="${person.getFirstName()}">VALUE</p>
-<p th:text="${person.getId()}">VALUE</p>
+    <p th:text="${person.getFirstName()}">VALUE</p>
+    <p th:text="${person.getLastName()}">VALUE</p>
+    <p th:text="${person.getEmail()}">VALUE</p>
 
-<a th:href="@{/{id}/edit(id=${person.getId()})}">Edit</a>
+    <p th:text="${person.getId()}">VALUE</p>
 
-<form th:method="DELETE" th:action="@{/{id}(id=${person.getId()})}">
-    <input type="submit" value="Delete">
+    <a th:href="@{/{id}/edit(id=${person.getId()})}">Edit</a>
 
-</form>
+    <form th:method="DELETE" th:action="@{/{id}(id=${person.getId()})}">
+        <input type="submit" value="Delete">
+
+    </form>
 </div>
 </body>
-
 
 </html>

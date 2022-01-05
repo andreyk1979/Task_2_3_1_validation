@@ -1,18 +1,16 @@
 package web.controller;
 
-//import jdk.internal.module.IllegalAccessLogger;
-//import org.graalvm.compiler.lir.LIRInstruction;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.dao.UserDAO;
 import web.models.User;
 
 
-import java.time.Period;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +53,10 @@ public class HelloController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("person") User user) {
+    public String create(@ModelAttribute("person") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/new";
+        }
         userDAO.save(user);
         return "redirect:/user";
     }
@@ -67,14 +68,16 @@ public class HelloController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") User user, @PathVariable("id") int id) {
-        userDAO.update(id,user);
+    public String update(@ModelAttribute("person") @Valid User user, BindingResult bindingResult, @PathVariable("id") int id) {
+        if (bindingResult.hasErrors())
+            return "/edit";
+        userDAO.update(id, user);
         return "redirect:/user";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-      userDAO.delete(id);
-      return "redirect:/user";
+        userDAO.delete(id);
+        return "redirect:/user";
     }
 }
