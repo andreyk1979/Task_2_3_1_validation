@@ -1,5 +1,15 @@
 package web.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Component;
 import web.models.User;
 
@@ -9,6 +19,13 @@ import java.util.List;
 @Component
 public class UserDAO {
     private static long PEOPLE_COUNT;
+
+    @PersistenceContext
+    EntityManager entityManager;
+
+    /*    public UserDAO(EntityManager em) {
+            this.em = em;
+        }*/
     private List<User> people;
 
     {
@@ -19,17 +36,18 @@ public class UserDAO {
         people.add(new User(++PEOPLE_COUNT, "Andrey4", "Kuimov4", "kuimov4@mail.ru"));
     }
 
+
     public List<User> index() {
-        return people;
+        return entityManager.createQuery("SELECT a FROM User a", User.class).getResultList();
     }
 
     public User show(int id) {
         return people.stream().filter(user -> user.getId() == id).findAny().orElse(null);
     }
 
+    @Transactional
     public void save(User user) {
-        user.setId(++PEOPLE_COUNT);
-        people.add(user);
+        entityManager.persist(user);
     }
 
     public void update(int id, User updateUser) {
@@ -39,8 +57,9 @@ public class UserDAO {
         personToBeUpdated.setEmail(updateUser.getEmail());
     }
 
+    @Transactional
     public void delete(int id) {
-        people.removeIf(p -> p.getId() == id);
+        entityManager.remove(id);
     }
 
 }

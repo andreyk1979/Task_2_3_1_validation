@@ -25,7 +25,7 @@ public class HelloController {
         this.userDAO = userDAO;
     }
 
-    @GetMapping(value = "/")
+/*    @GetMapping(value = "/")
     public String sayWelcome(ModelMap model) {
         List<String> messages = new ArrayList<>();
         messages.add("Hello!");
@@ -33,7 +33,7 @@ public class HelloController {
         messages.add("5.2.0 version by sep'19 ");
         model.addAttribute("messages", messages);
         return "index";
-    }
+    }*/
 
     @GetMapping("/user")
     public String index(Model model) {
