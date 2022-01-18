@@ -25,15 +25,6 @@ public class HelloController {
         this.userDAO = userDAO;
     }
 
-/*    @GetMapping(value = "/")
-    public String sayWelcome(ModelMap model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Hello!");
-        messages.add("I'm Spring MVC application");
-        messages.add("5.2.0 version by sep'19 ");
-        model.addAttribute("messages", messages);
-        return "index";
-    }*/
 
     @GetMapping("/user")
     public String index(Model model) {
@@ -42,8 +33,9 @@ public class HelloController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", userDAO.show(id));
+    public String show(@PathVariable("id") long id, Model model) {
+        model.addAttribute("person", userDAO.getById(id));
+        //return "edit";
         return "show";
     }
 
@@ -55,29 +47,29 @@ public class HelloController {
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/new";
+            return "new";
         }
         userDAO.save(user);
         return "redirect:/user";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person", userDAO.show(id));
+    public String edit(Model model, @PathVariable("id") long id) {
+        model.addAttribute("person", userDAO.getById(id));
         return "/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid User user, BindingResult bindingResult, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("person") @Valid User user, BindingResult bindingResult, @PathVariable("id") long id) {
         if (bindingResult.hasErrors())
             return "/edit";
         userDAO.update(id, user);
         return "redirect:/user";
     }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        userDAO.delete(id);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") long id) {
+        User user = userDAO.getById(id);
+        userDAO.delete(user);
         return "redirect:/user";
     }
 }

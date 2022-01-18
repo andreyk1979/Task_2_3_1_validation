@@ -6,8 +6,9 @@
     <title>Person</title>
 </head>
 <body>
-<div>
+<div th:align="center">
 
+    <br/> Name:
     <p th:text="${person.getFirstName()}">VALUE</p>
     <p th:text="${person.getLastName()}">VALUE</p>
     <p th:text="${person.getEmail()}">VALUE</p>
@@ -16,11 +17,36 @@
 
     <a th:href="@{/{id}/edit(id=${person.getId()})}">Edit</a>
 
-    <form th:method="DELETE" th:action="@{/{id}(id=${person.getId()})}">
-        <input type="submit" value="Delete">
+    <!-- <form th:method="DELETE" th:action="@{/{id}(id=${person.getId()})}">
+         <input type="submit" value="Delete">
+ -->
+    <a th:href="@{/delete/{id}(id=${person.id})}">Delete</a>
 
-    </form>
 </div>
 </body>
 
 </html>
+
+
+<!--<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div align="center">
+    <h2>Edit User</h2>
+    <form th:action="@{/{id}(id=${person.id})}" th:object="${person}" method="post">
+        <br/> Name:
+        <input type="text" th:field="*{firstName}"/>
+        <br/> Age:
+        <input type="text" th:field="*{lastName}"/>
+        <br/> Email:
+        <input type="text" th:field="*{email}"/>
+        <br/>
+        <input type="submit" value="Update User"/>
+    </form>
+</div>
+</body>
+</html>-->

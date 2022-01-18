@@ -22,11 +22,7 @@ public class UserDAO {
 
     @PersistenceContext
     EntityManager entityManager;
-
-    /*    public UserDAO(EntityManager em) {
-            this.em = em;
-        }*/
-    private List<User> people;
+/*    private List<User> people;
 
     {
         people = new ArrayList<>();
@@ -34,15 +30,15 @@ public class UserDAO {
         people.add(new User(++PEOPLE_COUNT, "Andrey2", "Kuimov2", "kuimov2@mail.ru"));
         people.add(new User(++PEOPLE_COUNT, "Andrey3", "Kuimov3", "kuimov3@mail.ru"));
         people.add(new User(++PEOPLE_COUNT, "Andrey4", "Kuimov4", "kuimov4@mail.ru"));
-    }
+    }*/
 
 
     public List<User> index() {
-        return entityManager.createQuery("SELECT a FROM User a", User.class).getResultList();
+        return entityManager.createQuery("FROM User").getResultList();
     }
 
-    public User show(int id) {
-        return people.stream().filter(user -> user.getId() == id).findAny().orElse(null);
+    public User getById(long id) {
+        return entityManager.find(User.class, id);
     }
 
     @Transactional
@@ -50,16 +46,16 @@ public class UserDAO {
         entityManager.persist(user);
     }
 
-    public void update(int id, User updateUser) {
-        User personToBeUpdated = show(id);
+    public void update(long id, User updateUser) {
+/*        User personToBeUpdated = show(id);
         personToBeUpdated.setFirstName(updateUser.getFirstName());
         personToBeUpdated.setLastName(updateUser.getLastName());
-        personToBeUpdated.setEmail(updateUser.getEmail());
+        personToBeUpdated.setEmail(updateUser.getEmail());*/
     }
 
     @Transactional
-    public void delete(int id) {
-        entityManager.remove(id);
+    public void delete(User user) {
+        entityManager.remove(entityManager.find(User.class, user.getId()));
     }
 
 }
