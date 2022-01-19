@@ -5,33 +5,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDAO;
 import web.models.User;
+import web.service.UserService;
 
 import javax.validation.Valid;
-
 
 @Controller
 @RequestMapping()
 public class HelloController {
 
-    private final UserDAO userDAO;
+    private final UserService userService;
 
     @Autowired
-    public HelloController(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public HelloController(UserService userService) {
+        this.userService = userService;
     }
-
 
     @GetMapping("/user")
     public String index(Model model) {
-        model.addAttribute("people", userDAO.index());
+        model.addAttribute("people", userService.index());
         return "user";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("person", userDAO.getById(id));
+        model.addAttribute("person", userService.getById(id));
         return "show";
     }
 
@@ -45,13 +43,13 @@ public class HelloController {
         if (bindingResult.hasErrors()) {
             return "new";
         }
-        userDAO.save(user);
+        userService.save(user);
         return "redirect:/user";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") long id) {
-        model.addAttribute("person", userDAO.getById(id));
+        model.addAttribute("person", userService.getById(id));
         return "/edit";
     }
 
@@ -59,13 +57,13 @@ public class HelloController {
     public String update(@ModelAttribute("person") @Valid User user, BindingResult bindingResult, @PathVariable("id") long id) {
         if (bindingResult.hasErrors())
             return "/edit";
-        userDAO.update(user);
+        userService.update(user);
         return "redirect:/user";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id) {
-        userDAO.delete(userDAO.getById(id));
+        userService.delete(userService.getById(id));
         return "redirect:/user";
     }
 }

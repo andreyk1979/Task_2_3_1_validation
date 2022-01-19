@@ -8,11 +8,22 @@
 <body>
 <div th:align="center">
 
-    <p th:text="${person.firstName}">VALUE</p>
-    <p th:text="${person.lastName}">VALUE</p>
-    <p th:text="${person.email}">VALUE</p>
+    <table border="1" cellpadding="5">
 
-    <p th:text="${person.id}">VALUE</p>
+        <tr>
+            <th>ID</th>
+            <th>FirstName(имя)</th>
+            <th>LastName(фамилия)</th>
+            <th>E-mail(эл.почта)</th>
+        </tr>
+        </tr>
+        <td th:text="${person.id}"></td>
+        <td th:text="${person.firstName}"></td>
+        <td th:text="${person.lastName}"></td>
+        <td th:text="${person.email}"></td>
+        </tr>
+
+    </table>
 
     <a th:href="@{/edit/{id}(id=${person.id})}">Edit</a>
 
