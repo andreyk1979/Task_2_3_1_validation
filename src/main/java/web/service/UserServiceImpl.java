@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> index() {
-        return userDao.index();
+    public List<User> showAllUsersList() {
+        return userDao.showAllUsersList();
     }
 
     @Override

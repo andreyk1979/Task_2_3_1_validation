@@ -3,6 +3,7 @@ package web.models;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -14,12 +15,14 @@ public class User {
     private Long id;
 
 
-    @NotEmpty(message = "FIrstname should not be empty")
-    @Size(min = 2, max = 30,message = "Firstname shuld be between 2 and 30 characters")
+    @NotEmpty(message = "Firstname should not be empty")
+    @Size(min = 2, max = 30, message = "Firstname shuld be between 2 and 30 characters")
+    @Pattern(regexp = "^([А-ЯЁ]{1}[а-яё'-]{1,23}|[A-Z]{1}[a-z'-]{1,23})|([А-ЯЁ]{3}[а-яё]{1,23}|[A-Z]{3}[a-z]{1,23})$", message = "Введите данные корректно")
+
     private String firstName;
 
     @NotEmpty(message = "Lastname should not be empty")
-    @Size(min = 2, max = 30,message = "Lastname shuld be between 2 and 30 characters")
+    @Size(min = 2, max = 30, message = "Lastname shuld be between 2 and 30 characters")
     private String lastName;
 
     @NotEmpty(message = "Email should not be empty")
@@ -32,6 +35,9 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public User() {
     }
 
     public Long getId() {
@@ -64,9 +70,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public User() {
     }
 
     @Override

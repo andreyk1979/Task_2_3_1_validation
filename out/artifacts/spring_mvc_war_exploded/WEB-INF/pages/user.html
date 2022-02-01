@@ -19,7 +19,7 @@
     </tr>
 
     <tr th:align="center" th:each="person : ${people}">
-        <td> <a th:href="@{/{id} (id=${person.id})}" th:text="${person.firstName + ',' + person.lastName}">user</a></td>
+        <td> <a th:href="@{/{id} (id=${person.id})}" th:text="${person.firstName + ', ' + person.lastName}"></a></td>
         <td th:text="${person.id}"></td>
     </tr>
 </table>

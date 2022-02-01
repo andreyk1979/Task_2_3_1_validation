@@ -14,13 +14,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(value = "web")
-@PropertySource("classpath:db.properties")
+@ComponentScan("web")
+@PropertySource(value = {"classpath:db.properties", "classpath:hibernate.properties"})
 @EnableTransactionManagement
 public class DatabaseConfig {
 
@@ -35,7 +33,16 @@ public class DatabaseConfig {
 
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProperties());
+
         return em;
+    }
+
+    public Properties getHibernateProperties() {
+        Properties props = new Properties();
+        props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        props.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        return props;
     }
 
     @Bean
@@ -63,14 +70,4 @@ public class DatabaseConfig {
         return manager;
     }
 
-    public Properties getHibernateProperties() {
-        try {
-            Properties properties = new Properties();
-            InputStream is = getClass().getClassLoader().getResourceAsStream("hibernate.properties");
-            properties.load(is);
-            return properties;
-        } catch (IOException e) {
-            throw new IllegalArgumentException("can't find 'hibernate.properties' in classpath!", e);
-        }
-    }
 }

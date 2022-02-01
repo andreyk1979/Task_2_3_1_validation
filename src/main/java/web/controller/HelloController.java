@@ -11,7 +11,6 @@ import web.service.UserService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping()
 public class HelloController {
 
     private final UserService userService;
@@ -22,14 +21,14 @@ public class HelloController {
     }
 
     @GetMapping("/user")
-    public String index(Model model) {
-        model.addAttribute("people", userService.index());
+    public String showAllUsersList(Model model) {
+        model.addAttribute("people", userService.showAllUsersList());
         return "user";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("person", userService.getById(id));
+        model.addAttribute("personID", userService.getById(id));
         return "show";
     }
 
@@ -38,7 +37,7 @@ public class HelloController {
         return "new";
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     public String create(@ModelAttribute("person") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "new";
@@ -53,7 +52,7 @@ public class HelloController {
         return "/edit";
     }
 
-    @PostMapping("/{id}")
+    @PatchMapping("/{id}")
     public String update(@ModelAttribute("person") @Valid User user, BindingResult bindingResult, @PathVariable("id") long id) {
         if (bindingResult.hasErrors())
             return "/edit";

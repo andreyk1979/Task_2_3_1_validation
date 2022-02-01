@@ -1,21 +1,25 @@
 package web.dao;
 
-import org.springframework.stereotype.Component;
+
+import org.springframework.stereotype.Repository;
 import web.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
 import java.util.List;
 
-@Component
+@Repository
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
-    public List<User> index() {
-        return entityManager.createQuery("FROM User").getResultList();
+    public List<User> showAllUsersList() {
+        TypedQuery<User> query = entityManager.createQuery("from User", User.class);
+        return query.getResultList();
     }
 
     @Override

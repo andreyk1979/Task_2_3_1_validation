@@ -17,17 +17,17 @@
             <th>E-mail(эл.почта)</th>
         </tr>
         </tr>
-        <td th:text="${person.id}"></td>
-        <td th:text="${person.firstName}"></td>
-        <td th:text="${person.lastName}"></td>
-        <td th:text="${person.email}"></td>
+        <td th:text="${personID.id}"></td>
+        <td th:text="${personID.firstName}"></td>
+        <td th:text="${personID.lastName}"></td>
+        <td th:text="${personID.email}"></td>
         </tr>
 
     </table>
 
-    <a th:href="@{/edit/{id}(id=${person.id})}">Edit</a>
+    <a th:href="@{/edit/{id}(id=${personID.id})}">Edit</a>
 
-    <a th:href="@{/delete/{id}(id=${person.id})}">Delete</a>
+    <a th:href="@{/delete/{id}(id=${personID.id})}">Delete</a>
     <br/>
     <hr/>
 
