@@ -2,10 +2,12 @@ package web.dao;
 
 
 import org.springframework.stereotype.Repository;
+import org.thymeleaf.standard.expression.EqualsExpression;
 import web.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import java.util.List;
@@ -38,9 +40,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(User user) {
-        entityManager.remove(entityManager.find(User.class, user.getId()));
+            public void delete(long id) {
+       entityManager.remove(entityManager.find(User.class, id));
     }
-
 }
 
