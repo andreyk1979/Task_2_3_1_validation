@@ -29,7 +29,7 @@ public class DatabaseConfig {
     public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
+        em.setPackagesToScan("web.models");
 
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProperties());
@@ -69,5 +69,4 @@ public class DatabaseConfig {
         manager.setEntityManagerFactory(getEntityManagerFactoryBean().getObject());
         return manager;
     }
-
 }

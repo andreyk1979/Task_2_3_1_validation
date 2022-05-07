@@ -29,14 +29,6 @@ public class User {
     @Email(message = "Email should be correct")
     private String email;
 
-
-    public User(Long id, String firstName, String lastName, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
     public User() {
     }
 
