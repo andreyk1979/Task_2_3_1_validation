@@ -22,7 +22,7 @@ public class MainController {
 
     @GetMapping("/user")
     public String showAllUsersList(Model model) {
-        model.addAttribute("people", userService.getUsersFromList());
+        model.addAttribute("people", userService.getUsersList());
         return "user";
     }
 
